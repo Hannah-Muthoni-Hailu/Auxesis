@@ -8,6 +8,7 @@ export type PackSize = '10kg' | '20kg' | '50kg' | '100kg' | 'tonnes'
 export interface Product {
   slug: string
   name: string
+  aliases: string[] // extra words people search for, e.g. courgette
   blurb: string
   method: GrowingMethod
   packs: PackSize[]
@@ -18,6 +19,7 @@ export interface Product {
 export const products: Product[] = [
   {
     slug: 'local-cucumber',
+    aliases: ['cucumber', 'cuke'],
     name: 'Local Cucumber',
     blurb: 'Short, crisp and thin-skinned, the everyday favourite moving fastest at Marikiti.',
     method: 'Open field',
@@ -27,6 +29,7 @@ export const products: Product[] = [
   },
   {
     slug: 'english-cucumber',
+    aliases: ['cucumber', 'seedless', 'long cucumber'],
     name: 'English Cucumber',
     blurb: 'Long, seedless greenhouse cucumbers graded and sleeved for hotels and supermarkets.',
     method: 'Greenhouse grown',
@@ -36,6 +39,7 @@ export const products: Product[] = [
   },
   {
     slug: 'red-capsicum',
+    aliases: ['capsicum', 'bell pepper', 'sweet pepper', 'pepper', 'paprika'],
     name: 'Red Capsicum',
     blurb: 'Fully ripened sweet peppers, colour-graded and packed in 5kg crates.',
     method: 'Greenhouse grown',
@@ -45,6 +49,7 @@ export const products: Product[] = [
   },
   {
     slug: 'yellow-capsicum',
+    aliases: ['capsicum', 'bell pepper', 'sweet pepper', 'pepper', 'paprika'],
     name: 'Yellow Capsicum',
     blurb: 'Bright, thick-walled yellow peppers grown under net for consistent colour.',
     method: 'Greenhouse grown',
@@ -54,6 +59,7 @@ export const products: Product[] = [
   },
   {
     slug: 'chillies',
+    aliases: ['chilli', 'chili', 'chile', 'hot pepper', 'pepper', 'bird eye', 'cayenne', 'pilipili'],
     name: 'Chillies',
     blurb: 'Bird eye and cayenne chillies, hand-picked and sorted by heat and length.',
     method: 'Open field',
@@ -63,6 +69,7 @@ export const products: Product[] = [
   },
   {
     slug: 'butternuts',
+    aliases: ['butternut', 'squash', 'pumpkin'],
     name: 'Butternuts',
     blurb: 'Cured butternut squash with long shelf life, ideal for bulk wholesale runs.',
     method: 'Open field',
@@ -72,6 +79,7 @@ export const products: Product[] = [
   },
   {
     slug: 'broccoli',
+    aliases: ['brocoli', 'brocolli'],
     name: 'Broccoli',
     blurb: 'Tight, deep-green heads cut in the cool of the morning and moved the same day.',
     method: 'Open field',
@@ -81,6 +89,7 @@ export const products: Product[] = [
   },
   {
     slug: 'cauliflower',
+    aliases: ['cauli'],
     name: 'Cauliflower',
     blurb: 'Creamy-white, compact curds grown in the Karatina highlands and trimmed to spec.',
     method: 'Open field',
@@ -90,6 +99,7 @@ export const products: Product[] = [
   },
   {
     slug: 'zucchini',
+    aliases: ['courgette', 'marrow', 'squash'],
     name: 'Zucchini',
     blurb: 'Young, glossy courgettes picked at uniform length for hotels and grocers.',
     method: 'Open field',
