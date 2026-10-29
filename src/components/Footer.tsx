@@ -21,8 +21,8 @@ export default function Footer() {
           <ul className="space-y-1.5 text-bark-soft">
             <li><Link to="/traceability" className="hover:text-olive-dark">Farm production tracker</Link></li>
             <li><Link to="/about" className="hover:text-olive-dark">About {site.name}</Link></li>
-            <li><Link to="/contact" className="hover:text-olive-dark">Wholesale enquiries</Link></li>
-            <li><Link to="/auth" className="hover:text-olive-dark">Staff login</Link></li>
+            <li><Link to="/quote" className="hover:text-olive-dark">Wholesale enquiries</Link></li>
+            <li><Link to="/auth" className="hover:text-olive-dark">Farmer &amp; staff sign in</Link></li>
           </ul>
         </div>
 

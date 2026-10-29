@@ -11,6 +11,7 @@ import {
   type BatchFilters,
 } from '@/lib/batches'
 import { isSupabaseConfigured } from '@/lib/supabase'
+import { usePageMeta } from '@/lib/usePageMeta'
 
 function Stat({ value, label }: { value: string; label: string }) {
   return (
@@ -22,6 +23,7 @@ function Stat({ value, label }: { value: string; label: string }) {
 }
 
 export default function Traceability() {
+  usePageMeta({ title: 'Farm tracker', description: 'See what is planted, growing and ready for market, farm by farm, updated by the farmers who grow it.' })
   const { data, isPending, isError } = useBatches()
   const [crop, setCrop] = useState<BatchFilters['crop']>('all')
   const [stage, setStage] = useState<BatchFilters['stage']>('any')

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import ProductCard from '@/components/ProductCard'
 import { site } from '@/config/site'
 import { products } from '@/data/products'
+import { usePageMeta } from '@/lib/usePageMeta'
 
 const pillars = [
   {
@@ -29,6 +30,7 @@ const sourcingPoints = [
 ]
 
 export default function Home() {
+  usePageMeta({})
   return (
     <>
       {/* Hero. Add a photo at public/images/hero.jpg and it appears behind the text. */}

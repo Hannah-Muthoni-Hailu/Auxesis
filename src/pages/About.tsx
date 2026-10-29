@@ -1,6 +1,7 @@
 import { ArrowRight, Handshake, Sprout, Store } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { site } from '@/config/site'
+import { usePageMeta } from '@/lib/usePageMeta'
 
 const sides = [
   {
@@ -36,6 +37,7 @@ const goals = [
 ]
 
 export default function About() {
+  usePageMeta({ title: 'About us', description: 'Auxesis grows and trades fresh produce from Karatina, Nyeri County to Marikiti and City Park markets in Nairobi, working directly with Kenyan farmers.' })
   return (
     <>
       <section className="container-page pt-14">

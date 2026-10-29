@@ -150,9 +150,8 @@ join (values
   on b.farm = f.name;
 
 -- ---------------------------------------------------------------
--- 6. Make yourself staff (do this AFTER you have signed up once on the site)
--- Replace the email with the one you signed up with, then run just this part:
---
---   insert into public.staff (user_id, note)
---   select id, 'Owner' from auth.users where email = 'you@example.com';
+-- 6. Make yourself staff
+-- The site has no public sign-up. First create your account in the Supabase dashboard
+-- (Authentication > Users > Add user, tick "Auto Confirm User"), then run
+-- supabase/make_staff.sql with your email in it.
 -- ---------------------------------------------------------------

@@ -74,6 +74,23 @@
   .btn-secondary:hover {
     background-color: var(--color-cream-dark);
   }
+  .input {
+    width: 100%;
+    border-radius: 0.75rem;
+    border: 1px solid var(--color-line);
+    background-color: white;
+    padding: 0.7rem 0.9rem;
+    font-size: 1rem;
+    outline: none;
+  }
+  .input:focus {
+    border-color: var(--color-olive);
+    box-shadow: 0 0 0 3px rgb(107 138 35 / 0.18);
+  }
+  .btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
   .card {
     border-radius: 1rem;
     border: 1px solid var(--color-line);

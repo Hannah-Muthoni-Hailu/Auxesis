@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import type { Product } from '@/data/products'
 
 interface Props {
@@ -32,6 +33,12 @@ export default function ProductCard({ product, showDetails = false }: Props) {
               {product.method}
             </p>
             <p className="text-xs text-bark-soft">{product.packNote}</p>
+            <Link
+              to={`/quote?crop=${encodeURIComponent(product.name)}`}
+              className="inline-block pt-1 text-sm font-semibold text-olive-dark hover:underline"
+            >
+              Request a quote
+            </Link>
           </>
         )}
       </div>

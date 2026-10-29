@@ -5,6 +5,7 @@ import GalleryTile from '@/components/GalleryTile'
 import ProductCard from '@/components/ProductCard'
 import { products, type GrowingMethod, type PackSize } from '@/data/products'
 import { filterProducts } from '@/lib/filterProducts'
+import { usePageMeta } from '@/lib/usePageMeta'
 
 const methods: Array<GrowingMethod | 'all'> = ['all', 'Greenhouse grown', 'Open field']
 const packs: Array<PackSize | 'any'> = ['any', '10kg', '20kg', '50kg', '100kg', 'tonnes']
@@ -17,6 +18,7 @@ const gallery = [
 ]
 
 export default function Produce() {
+  usePageMeta({ title: 'Our produce', description: 'Cucumbers, red and yellow capsicum, chillies, butternuts, broccoli, cauliflower and zucchini in wholesale pack sizes from our Karatina farm and contracted Kenyan growers.' })
   const [query, setQuery] = useState('')
   const [method, setMethod] = useState<GrowingMethod | 'all'>('all')
   const [pack, setPack] = useState<PackSize | 'any'>('any')
@@ -155,7 +157,7 @@ export default function Produce() {
               available batch.
             </p>
           </div>
-          <Link to="/contact" className="btn shrink-0 bg-sun text-bark hover:bg-sun-dark">
+          <Link to="/quote" className="btn shrink-0 bg-sun text-bark hover:bg-sun-dark">
             Request a quote <ArrowRight size={18} />
           </Link>
         </div>

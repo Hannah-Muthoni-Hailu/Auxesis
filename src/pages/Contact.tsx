@@ -1,6 +1,8 @@
 import { Clock, Mail, MapPin, MessageCircle, Phone, Sprout } from 'lucide-react'
 import type { ReactNode } from 'react'
+import { Link } from 'react-router-dom'
 import { site, whatsappLink } from '@/config/site'
+import { usePageMeta } from '@/lib/usePageMeta'
 
 function InfoCard({
   icon,
@@ -25,6 +27,7 @@ function InfoCard({
 }
 
 export default function Contact() {
+  usePageMeta({ title: 'Contact', description: 'Call, WhatsApp or visit Auxesis at Wakulima (Marikiti) Market, Nairobi for wholesale orders, retail enquiries and farmer partnerships.' })
   const phoneHref = `tel:+${site.whatsappNumber}`
   const mapHref = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(site.stall)}`
 
@@ -48,6 +51,9 @@ export default function Contact() {
         <a href={phoneHref} className="btn btn-secondary">
           <Phone size={18} /> Call {site.phone}
         </a>
+        <Link to="/quote" className="btn btn-secondary">
+          Request a quote
+        </Link>
       </div>
 
       <div className="mt-10 grid gap-5 md:grid-cols-2">

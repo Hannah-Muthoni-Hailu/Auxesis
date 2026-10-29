@@ -1,6 +1,7 @@
 import { Menu, X } from 'lucide-react'
 import { useState } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
+import { hasSavedSession } from '@/auth/savedSession'
 import { nav } from '@/config/site'
 import Logo from './Logo'
 
@@ -10,6 +11,8 @@ export default function Header() {
   const { pathname } = useLocation()
   const [openOn, setOpenOn] = useState<string | null>(null)
   const open = openOn === pathname
+  // Re-checked on every page change, which is when signing in or out happens.
+  const signedIn = hasSavedSession()
 
   const linkClass = ({ isActive }: { isActive: boolean }) =>
     `rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
@@ -27,6 +30,15 @@ export default function Header() {
               {item.label}
             </NavLink>
           ))}
+          {signedIn ? (
+            <NavLink to="/portal" className="btn btn-primary ml-2 !px-4 !py-1.5 text-sm">
+              My batches
+            </NavLink>
+          ) : (
+            <NavLink to="/auth" className="btn btn-secondary ml-2 !px-4 !py-1.5 text-sm">
+              Sign in
+            </NavLink>
+          )}
         </nav>
 
         <button
@@ -55,6 +67,12 @@ export default function Header() {
                 {item.label}
               </NavLink>
             ))}
+            <NavLink
+              to={signedIn ? '/portal' : '/auth'}
+              className="py-3 text-base font-semibold text-olive-dark"
+            >
+              {signedIn ? 'My batches' : 'Sign in'}
+            </NavLink>
           </div>
         </nav>
       )}

@@ -93,6 +93,39 @@ export function filterBatches(batches: Batch[], filters: BatchFilters): Batch[] 
   )
 }
 
+export function nextStage(stage: BatchStage): BatchStage | null {
+  const i = stageIndex(stage)
+  return i >= 0 && i < STAGES.length - 1 ? STAGES[i + 1] : null
+}
+
+export interface StagePatch {
+  stage: BatchStage
+  harvested_on?: string
+  market_ready_on?: string
+}
+
+// Moving a batch forward one stage. Fills in the harvest / market-ready date with
+// today's date the first time that stage is reached, so farmers do not have to type it.
+export function advancePatch(
+  batch: Pick<Batch, 'stage' | 'harvested_on' | 'market_ready_on'>,
+  today: string,
+): StagePatch | null {
+  const next = nextStage(batch.stage)
+  if (!next) return null
+  const patch: StagePatch = { stage: next }
+  if (next === 'harvested' && !batch.harvested_on) patch.harvested_on = today
+  if (next === 'ready_for_market' && !batch.market_ready_on) patch.market_ready_on = today
+  return patch
+}
+
+// Today's date in the visitor's own time zone, as YYYY-MM-DD.
+export function todayISO(now: Date = new Date()): string {
+  const y = now.getFullYear()
+  const m = String(now.getMonth() + 1).padStart(2, '0')
+  const d = String(now.getDate()).padStart(2, '0')
+  return `${y}-${m}-${d}`
+}
+
 export interface BatchSummary {
   farms: number
   readyForMarket: number
