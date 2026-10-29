@@ -1,0 +1,100 @@
+@import "tailwindcss";
+
+@theme {
+  --color-cream: #faf5ea;
+  --color-cream-dark: #f1e9d6;
+  --color-bark: #3a2a14;
+  --color-bark-soft: #6b5a43;
+  --color-olive: #6b8a23;
+  --color-olive-dark: #55701a;
+  --color-sun: #e08a1e;
+  --color-sun-dark: #c4750f;
+  --color-line: #e4dac3;
+
+  --font-display: "Outfit", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Figtree", ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    background-color: var(--color-cream);
+    color: var(--color-bark);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+  }
+}
+
+@layer components {
+  .container-page {
+    margin-inline: auto;
+    width: 100%;
+    max-width: 72rem;
+    padding-inline: 1.25rem;
+  }
+  .eyebrow {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-sun-dark);
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 0.75rem;
+    padding: 0.75rem 1.25rem;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: background-color 0.15s, border-color 0.15s, color 0.15s;
+    cursor: pointer;
+  }
+  .btn-primary {
+    background-color: var(--color-olive);
+    color: white;
+  }
+  .btn-primary:hover {
+    background-color: var(--color-olive-dark);
+  }
+  .btn-secondary {
+    border: 1px solid var(--color-bark);
+    color: var(--color-bark);
+  }
+  .btn-secondary:hover {
+    background-color: var(--color-cream-dark);
+  }
+  .card {
+    border-radius: 1rem;
+    border: 1px solid var(--color-line);
+    background-color: white;
+  }
+  .chip {
+    border-radius: 9999px;
+    border: 1px solid var(--color-line);
+    background-color: white;
+    padding: 0.35rem 0.9rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.15s, color 0.15s, border-color 0.15s;
+  }
+  .chip:hover {
+    border-color: var(--color-olive);
+  }
+  .chip[data-active="true"] {
+    background-color: var(--color-olive);
+    border-color: var(--color-olive);
+    color: white;
+  }
+}
