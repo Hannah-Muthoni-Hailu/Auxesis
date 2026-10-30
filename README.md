@@ -49,6 +49,10 @@ Visitors fill in the form at `/quote` (also linked from Produce, Contact and the
 
 Staff read them in **My batches > Quote enquiries**, where each request has Call and WhatsApp buttons and a Delete button. Only staff can read or delete enquiries; visitors can only add one. A hidden bot-trap field stops most spam. If spam ever gets through, tell us and we will add a stronger check.
 
+## Putting it online
+
+See `DEPLOY.md` for the step-by-step Cloudflare guide. In short: `npx wrangler login` once, then `npm run deploy` each time.
+
 ## Search and sharing settings
 
 Each page sets its own browser-tab title and search description (the `usePageMeta` line at the top of each page file). Sign-in and portal pages ask search engines to skip them. When the site goes live, set `VITE_SITE_URL` (for example `https://www.auxesisproduce.co.ke`) where the site is built; the build then writes `sitemap.xml`, `robots.txt` and the business details search engines read, and the WhatsApp/Facebook sharing preview works. The sharing picture is `public/og-image.png` (1200 x 630); replace it with a photo whenever you like.
@@ -76,4 +80,4 @@ Add your own pictures and they appear automatically:
 ## Status
 
 Built: layout, Home, Produce, Farm Tracker, About, Contact, quote enquiry form and staff inbox, sign-in, farmer portal, staff farm management, database rules.
-Still to come: deployment and connecting your domain.
+Ready to deploy: see `DEPLOY.md`.

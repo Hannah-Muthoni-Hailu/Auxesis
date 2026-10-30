@@ -7,7 +7,9 @@ export default function Layout() {
   const { pathname } = useLocation()
 
   // Start each page at the top when navigating.
-  useEffect(() => window.scrollTo(0, 0), [pathname])
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [pathname])
 
   return (
     <div className="flex min-h-screen flex-col">
