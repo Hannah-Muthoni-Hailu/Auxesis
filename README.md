@@ -63,6 +63,7 @@ Each page sets its own browser-tab title and search description (the `usePageMet
 |---|---|
 | Phone, email, addresses, opening hours | `src/config/site.ts` |
 | The 9 produce lines (text, pack sizes, growing method) | `src/data/products.ts` |
+| FAQ questions and answers | `src/data/faq.ts` |
 | Pages | `src/pages/` (farmer and staff screens in `src/pages/portal/`) |
 | Header, footer, batch form, shared pieces | `src/components/` |
 | Sign-in logic | `src/auth/` |
@@ -79,5 +80,5 @@ Add your own pictures and they appear automatically:
 
 ## Status
 
-Built: layout, Home, Produce, Farm Tracker, About, Contact, quote enquiry form and staff inbox, sign-in, farmer portal, staff farm management, database rules.
+Built: layout, Home, Produce, Farm Tracker, About, FAQ, Contact, quote enquiry form and staff inbox, sign-in, farmer portal, staff farm management, database rules.
 Ready to deploy: see `DEPLOY.md`.

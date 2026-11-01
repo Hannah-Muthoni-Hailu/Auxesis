@@ -6,7 +6,7 @@ import { loadEnv } from 'vite'
 import { defineConfig } from 'vitest/config'
 import { site } from './src/config/site.ts'
 
-const publicPages = ['/', '/produce', '/traceability', '/about', '/contact', '/quote']
+const publicPages = ['/', '/produce', '/traceability', '/about', '/faq', '/contact', '/quote']
 
 // Fills in the website address (VITE_SITE_URL) where search engines and social previews need it,
 // and writes robots.txt and sitemap.xml into the build.

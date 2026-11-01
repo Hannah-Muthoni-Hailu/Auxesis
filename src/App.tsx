@@ -12,6 +12,7 @@ const Traceability = lazy(() => import('@/pages/Traceability'))
 const About = lazy(() => import('@/pages/About'))
 const Contact = lazy(() => import('@/pages/Contact'))
 const Quote = lazy(() => import('@/pages/Quote'))
+const Faq = lazy(() => import('@/pages/Faq'))
 const AuthShell = lazy(() => import('@/auth/AuthShell'))
 const Auth = lazy(() => import('@/pages/Auth'))
 const Portal = lazy(() => import('@/pages/portal/Portal'))
@@ -37,6 +38,7 @@ export default function App() {
           <Route path="about" element={<About />} />
           <Route path="contact" element={<Contact />} />
           <Route path="quote" element={<Quote />} />
+          <Route path="faq" element={<Faq />} />
 
           {/* Sign-in and portal pages share one sign-in provider. */}
           <Route element={<AuthShell />}>

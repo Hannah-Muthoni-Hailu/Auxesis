@@ -16,6 +16,7 @@ export const nav = [
   { to: '/produce', label: 'Produce' },
   { to: '/traceability', label: 'Farm Tracker' },
   { to: '/about', label: 'About' },
+  { to: '/faq', label: 'FAQ' },
   { to: '/contact', label: 'Contact' },
 ] as const
 

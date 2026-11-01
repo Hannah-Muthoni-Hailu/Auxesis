@@ -1,0 +1,34 @@
+import { describe, expect, it } from 'vitest'
+import { faqCount, faqGroups } from './faq'
+import { products } from './products'
+
+describe('faq data', () => {
+  it('has the 11 agreed questions, 8 for buyers and 3 for farmers', () => {
+    expect(faqCount).toBe(11)
+    expect(faqGroups.map((g) => g.items.length)).toEqual([8, 3])
+  })
+
+  it('has a non-empty question and answer for every item, and no duplicates', () => {
+    const questions = faqGroups.flatMap((g) => g.items.map((i) => i.q))
+    expect(new Set(questions).size).toBe(questions.length)
+    for (const item of faqGroups.flatMap((g) => g.items)) {
+      expect(item.q.trim()).not.toBe('')
+      expect(item.a.trim().length).toBeGreaterThan(40)
+    }
+  })
+
+  it('answers the growing-method question from the product list, so it cannot drift', () => {
+    const answer = faqGroups[0].items.find((i) => i.q.includes('open field or greenhouse'))!.a
+    for (const p of products) expect(answer).toContain(p.name)
+    const greenhouse = answer.split('Open field:')[0]
+    for (const p of products.filter((p) => p.method === 'Greenhouse grown')) expect(greenhouse).toContain(p.name)
+    for (const p of products.filter((p) => p.method === 'Open field')) expect(greenhouse).not.toContain(p.name)
+  })
+
+  it('only links to pages that exist', () => {
+    const pages = ['/', '/produce', '/traceability', '/about', '/faq', '/contact', '/quote']
+    for (const item of faqGroups.flatMap((g) => g.items)) {
+      if (item.link) expect(pages).toContain(item.link.to)
+    }
+  })
+})
