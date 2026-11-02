@@ -19,7 +19,7 @@ export interface Product {
 export const products: Product[] = [
   {
     slug: 'local-cucumber',
-    aliases: ['cucumber', 'cuke'],
+    aliases: ['cucumber', 'cuke', 'tango'],
     name: 'Local Cucumber',
     blurb: 'Short, crisp and thin-skinned, the everyday favourite moving fastest at Marikiti.',
     method: 'Open field',
@@ -29,7 +29,7 @@ export const products: Product[] = [
   },
   {
     slug: 'english-cucumber',
-    aliases: ['cucumber', 'seedless', 'long cucumber'],
+    aliases: ['cucumber', 'seedless', 'long cucumber', 'tango'],
     name: 'English Cucumber',
     blurb: 'Long, seedless greenhouse cucumbers graded and sleeved for hotels and supermarkets.',
     method: 'Greenhouse grown',
@@ -39,7 +39,7 @@ export const products: Product[] = [
   },
   {
     slug: 'red-capsicum',
-    aliases: ['capsicum', 'bell pepper', 'sweet pepper', 'pepper', 'paprika'],
+    aliases: ['capsicum', 'bell pepper', 'sweet pepper', 'pepper', 'paprika', 'pilipili hoho'],
     name: 'Red Capsicum',
     blurb: 'Fully ripened sweet peppers, colour-graded and packed in 5kg crates.',
     method: 'Greenhouse grown',
@@ -49,7 +49,7 @@ export const products: Product[] = [
   },
   {
     slug: 'yellow-capsicum',
-    aliases: ['capsicum', 'bell pepper', 'sweet pepper', 'pepper', 'paprika'],
+    aliases: ['capsicum', 'bell pepper', 'sweet pepper', 'pepper', 'paprika', 'pilipili hoho'],
     name: 'Yellow Capsicum',
     blurb: 'Bright, thick-walled yellow peppers grown under net for consistent colour.',
     method: 'Greenhouse grown',
@@ -69,7 +69,7 @@ export const products: Product[] = [
   },
   {
     slug: 'butternuts',
-    aliases: ['butternut', 'squash', 'pumpkin'],
+    aliases: ['butternut', 'squash', 'pumpkin', 'boga'],
     name: 'Butternuts',
     blurb: 'Cured butternut squash with long shelf life, ideal for bulk wholesale runs.',
     method: 'Open field',
@@ -89,7 +89,7 @@ export const products: Product[] = [
   },
   {
     slug: 'cauliflower',
-    aliases: ['cauli'],
+    aliases: ['cauli', 'kolifulawa'],
     name: 'Cauliflower',
     blurb: 'Creamy-white, compact curds grown in the Karatina highlands and trimmed to spec.',
     method: 'Open field',

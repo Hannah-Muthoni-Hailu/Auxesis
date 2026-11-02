@@ -4,6 +4,7 @@ import { cropNames } from '@/data/products'
 import MarketBoard from '@/components/MarketBoard'
 import PageHeader from '@/components/PageHeader'
 import { useBatches } from '@/hooks/useBatches'
+import { useT } from '@/i18n'
 import {
   countByStage,
   filterBatches,
@@ -26,7 +27,11 @@ function Stat({ value, label }: { value: string; label: string }) {
 }
 
 export default function Tracker() {
-  usePageMeta({ title: 'Farm tracker and market board', description: 'See what is planted, growing and ready for market, farm by farm, plus this week at Marikiti.' })
+  const t = useT()
+  usePageMeta({
+    title: t('Farm tracker and market board'),
+    description: t('See what is planted, growing and ready for market, farm by farm, plus this week at Marikiti.'),
+  })
   const { data, isPending, isError } = useBatches()
   const [crop, setCrop] = useState<BatchFilters['crop']>('all')
   const [stage, setStage] = useState<BatchFilters['stage']>('any')
@@ -40,22 +45,22 @@ export default function Tracker() {
 
   return (
     <>
-      <PageHeader eyebrow="Live listing" title="Farm production tracker">
-        Follow every batch from the day it was planted to the day it is ready at Marikiti and City Park, across our Karatina farm and commercial growers countrywide.
+      <PageHeader eyebrow={t('Live listing')} title={t('Farm production tracker')}>
+        {t('Follow every batch from the day it was planted to the day it is ready at Marikiti and City Park, across our Karatina farm and commercial growers countrywide.')}
       </PageHeader>
       <section className="container-x">
       <dl className="grid gap-4 sm:grid-cols-3">
-        <Stat value={loaded ? String(summary.farms) : '—'} label="Farms in production" />
+        <Stat value={loaded ? String(summary.farms) : '—'} label={t('Farms in production')} />
         <Stat
           value={loaded ? String(summary.readyForMarket) : '—'}
-          label="Batches ready for market"
+          label={t('Batches ready for market')}
         />
-        <Stat value={loaded ? formatKg(summary.volumeKg) : '—'} label="Tracked volume" />
+        <Stat value={loaded ? formatKg(summary.volumeKg) : '—'} label={t('Tracked volume')} />
       </dl>
 
       {/* Filters */}
       <div className="mt-8 space-y-4">
-        <div className="flex flex-wrap gap-2" role="group" aria-label="Crop">
+        <div className="flex flex-wrap gap-2" role="group" aria-label={t('Crop')}>
           {(['all', ...cropNames] as const).map((c) => (
             <button
               key={c}
@@ -64,12 +69,12 @@ export default function Tracker() {
               data-active={crop === c}
               onClick={() => setCrop(c)}
             >
-              {c === 'all' ? 'All crops' : c}
+              {c === 'all' ? t('All crops') : t(c)}
             </button>
           ))}
         </div>
-        <div role="group" aria-label="Stage">
-          <p className="mb-2 text-sm text-bark-soft">Pipeline: tap a stage to see only those batches.</p>
+        <div role="group" aria-label={t('Stage')}>
+          <p className="mb-2 text-sm text-bark-soft">{t('Pipeline: tap a stage to see only those batches.')}</p>
           <ol className="grid grid-cols-4 gap-2 sm:grid-cols-7">
             {STAGES.map((s, i) => (
               <li key={s}>
@@ -78,14 +83,14 @@ export default function Tracker() {
                   className="flex w-full flex-col items-center gap-1 rounded-xl border border-line bg-white px-1 py-3 text-center text-xs font-semibold transition-colors hover:border-olive data-[active=true]:border-olive data-[active=true]:bg-olive data-[active=true]:text-white"
                   data-active={stage === s}
                   aria-pressed={stage === s}
-                  aria-label={`${stageLabels[s]}, ${counts[s]} ${counts[s] === 1 ? 'batch' : 'batches'}`}
+                  aria-label={counts[s] === 1 ? t('{stage}, 1 batch', { stage: t(stageLabels[s]) }) : t('{stage}, {n} batches', { stage: t(stageLabels[s]), n: counts[s] })}
                   onClick={() => setStage(stage === s ? 'any' : s)}
                 >
                   <span className="font-display text-2xl font-extrabold leading-none" aria-hidden>
                     {loaded ? counts[s] : '—'}
                   </span>
                   <span aria-hidden>
-                    {i + 1}. {stageLabels[s]}
+                    {i + 1}. {t(stageLabels[s])}
                   </span>
                 </button>
               </li>
@@ -108,22 +113,21 @@ export default function Tracker() {
           </div>
         ) : isPending ? (
           <p className="text-sm text-bark-soft" aria-live="polite">
-            Loading batches…
+            {t('Loading batches…')}
           </p>
         ) : isError ? (
           <div className="card p-8">
-            <p className="font-semibold">We could not load the tracker right now.</p>
+            <p className="font-semibold">{t('We could not load the tracker right now.')}</p>
             <p className="mt-1 text-sm text-bark-soft">
-              Please refresh the page in a moment. If it keeps happening, call us on the number
-              on the Contact page.
+              {t('Please refresh the page in a moment. If it keeps happening, call us on the number on the Contact page.')}
             </p>
           </div>
         ) : visible.length === 0 ? (
           <div className="card p-8 text-center">
             <p className="font-semibold">
               {batches.length === 0
-                ? 'No batches have been registered yet.'
-                : 'No batches match those filters.'}
+                ? t('No batches have been registered yet.')
+                : t('No batches match those filters.')}
             </p>
             {batches.length > 0 && (
               <button
@@ -134,7 +138,7 @@ export default function Tracker() {
                   setStage('any')
                 }}
               >
-                Clear filters
+                {t('Clear filters')}
               </button>
             )}
           </div>

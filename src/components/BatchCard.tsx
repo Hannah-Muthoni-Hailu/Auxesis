@@ -1,4 +1,5 @@
 import { MapPin } from 'lucide-react'
+import { useT } from '@/i18n'
 import {
   formatDate,
   formatKg,
@@ -10,15 +11,17 @@ import {
 } from '@/lib/batches'
 
 function DateItem({ label, value }: { label: string; value: string | null }) {
+  const t = useT()
   return (
     <div>
-      <dt className="text-[0.7rem] font-semibold uppercase tracking-wide text-bark-soft">{label}</dt>
+      <dt className="text-[0.7rem] font-semibold uppercase tracking-wide text-bark-soft">{t(label)}</dt>
       <dd className="text-sm font-medium">{formatDate(value)}</dd>
     </div>
   )
 }
 
 export default function BatchCard({ batch }: { batch: Batch }) {
+  const t = useT()
   const current = stageIndex(batch.stage)
   const farm = batch.farms
 
@@ -26,13 +29,13 @@ export default function BatchCard({ batch }: { batch: Batch }) {
     <article className="card flex flex-col gap-4 p-5">
       <header className="flex items-start justify-between gap-3">
         <div>
-          <h3 className="text-lg font-semibold leading-tight">{batch.crop}</h3>
+          <h3 className="text-lg font-semibold leading-tight">{t(batch.crop)}</h3>
           {batch.variety && <p className="text-sm text-bark-soft">{batch.variety}</p>}
         </div>
         <span
           className={`shrink-0 rounded-full px-3 py-1 text-xs font-semibold ${stageStyles[batch.stage]}`}
         >
-          {stageLabels[batch.stage]}
+          {t(stageLabels[batch.stage])}
         </span>
       </header>
 
@@ -40,7 +43,7 @@ export default function BatchCard({ batch }: { batch: Batch }) {
       <div
         className="flex gap-1"
         role="img"
-        aria-label={`Stage ${current + 1} of ${STAGES.length}: ${stageLabels[batch.stage]}`}
+        aria-label={t('Stage {n} of {total}: {stage}', { n: current + 1, total: STAGES.length, stage: t(stageLabels[batch.stage]) })}
       >
         {STAGES.map((s, i) => (
           <span
@@ -58,7 +61,7 @@ export default function BatchCard({ batch }: { batch: Batch }) {
           </span>
           {farm.is_own_farm && (
             <span className="rounded-full bg-sun/20 px-2 py-0.5 text-xs font-semibold text-sun-dark">
-              Our farm
+              {t('Our farm')}
             </span>
           )}
         </p>
@@ -77,7 +80,7 @@ export default function BatchCard({ batch }: { batch: Batch }) {
             {batch.batch_code}
           </span>
           <span className="font-semibold">{formatKg(batch.quantity_kg)}</span>
-          {batch.grade && <span className="text-bark-soft">Grade {batch.grade}</span>}
+          {batch.grade && <span className="text-bark-soft">{t('Grade {grade}', { grade: batch.grade })}</span>}
         </div>
         {batch.notes && <p className="text-sm text-bark-soft">{batch.notes}</p>}
       </footer>

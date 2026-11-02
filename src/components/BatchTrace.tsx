@@ -1,9 +1,11 @@
 import { Check } from 'lucide-react'
 import BatchCard from '@/components/BatchCard'
+import { useT } from '@/i18n'
 import { buildTimeline, formatDate, stageLabels, type TracedBatch } from '@/lib/batches'
 
 // The result of a batch-code lookup: the batch, and the dated journey it has made so far.
 export default function BatchTrace({ batch }: { batch: TracedBatch }) {
+  const t = useT()
   const steps = buildTimeline(batch, batch.batch_events)
 
   return (
@@ -11,7 +13,7 @@ export default function BatchTrace({ batch }: { batch: TracedBatch }) {
       <BatchCard batch={batch} />
       <div className="card p-5 md:p-6">
         <h2 className="text-lg font-semibold">
-          Journey of {batch.crop}
+          {t('Journey of {crop}', { crop: t(batch.crop) })}
           {batch.block ? ` · ${batch.block}` : ''}
         </h2>
         <ol className="mt-4 space-y-0">
@@ -35,10 +37,10 @@ export default function BatchTrace({ batch }: { batch: TracedBatch }) {
               </div>
               <div className={`pb-5 ${s.state === 'upcoming' ? 'text-bark-soft' : ''}`}>
                 <p className="font-semibold leading-7">
-                  {stageLabels[s.stage]}
+                  {t(stageLabels[s.stage])}
                   {s.state === 'current' && (
                     <span className="ml-2 rounded-full bg-sun/20 px-2 py-0.5 text-xs font-semibold text-sun-dark">
-                      Now
+                      {t('Now')}
                     </span>
                   )}
                 </p>

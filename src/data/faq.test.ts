@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { faqCount, faqGroups } from './faq'
+import { answerText, faqCount, faqGroups } from './faq'
+import { translate } from '@/i18n'
 import { products } from './products'
 
 describe('faq data', () => {
@@ -13,12 +14,12 @@ describe('faq data', () => {
     expect(new Set(questions).size).toBe(questions.length)
     for (const item of faqGroups.flatMap((g) => g.items)) {
       expect(item.q.trim()).not.toBe('')
-      expect(item.a.trim().length).toBeGreaterThan(40)
+      expect(answerText(item, (x) => translate('en', x)).trim().length).toBeGreaterThan(40)
     }
   })
 
   it('answers the growing-method question from the product list, so it cannot drift', () => {
-    const answer = faqGroups[0].items.find((i) => i.q.includes('open field or greenhouse'))!.a
+    const answer = answerText(faqGroups[0].items.find((i) => i.q.includes('open field or greenhouse'))!, (x) => translate('en', x))
     for (const p of products) expect(answer).toContain(p.name)
     const greenhouse = answer.split('Open field:')[0]
     for (const p of products.filter((p) => p.method === 'Greenhouse grown')) expect(greenhouse).toContain(p.name)

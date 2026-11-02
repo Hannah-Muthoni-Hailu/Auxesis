@@ -3,11 +3,13 @@
 // Answers marked "NEEDS CONFIRMING" are careful drafts that do not promise anything specific.
 // Replace them with your real figures and terms when you have them.
 
+import type { TFn } from '@/i18n'
 import { products } from './products'
 
 export interface FaqItem {
   q: string
-  a: string
+  /** Plain text, or a function when part of the answer comes from other data. */
+  a: string | ((t: TFn) => string)
   /** Optional link shown under the answer. */
   link?: { to: string; label: string }
 }
@@ -19,11 +21,16 @@ export interface FaqGroup {
   items: FaqItem[]
 }
 
-const names = (method: 'Greenhouse grown' | 'Open field') =>
-  products.filter((p) => p.method === method).map((p) => p.name)
+const names = (method: 'Greenhouse grown' | 'Open field', t: TFn) =>
+  products.filter((p) => p.method === method).map((p) => t(p.name))
 
-const list = (items: string[]) =>
-  items.length <= 1 ? items.join('') : `${items.slice(0, -1).join(', ')} and ${items[items.length - 1]}`
+const list = (items: string[], t: TFn) =>
+  items.length <= 1
+    ? items.join('')
+    : `${items.slice(0, -1).join(', ')} ${t('and')} ${items[items.length - 1]}`
+
+/** The answer as text in the visitor's language. */
+export const answerText = (item: FaqItem, t: TFn) => (typeof item.a === 'function' ? item.a(t) : t(item.a))
 
 export const faqGroups: FaqGroup[] = [
   {
@@ -43,7 +50,8 @@ export const faqGroups: FaqGroup[] = [
       },
       {
         q: 'Is it open field or greenhouse?',
-        a: `Greenhouse grown: ${list(names('Greenhouse grown'))}. Open field: ${list(names('Open field'))}. The Produce page shows the growing method on each crop.`,
+        a: (t) =>
+          `${t('Greenhouse grown')}: ${list(names('Greenhouse grown', t), t)}. ${t('Open field')}: ${list(names('Open field', t), t)}. ${t('The Produce page shows the growing method on each crop.')}`,
         link: { to: '/produce', label: 'See our produce' },
       },
       {

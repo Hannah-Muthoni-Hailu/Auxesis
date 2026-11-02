@@ -5,6 +5,7 @@ import GalleryTile from '@/components/GalleryTile'
 import ProductCard from '@/components/ProductCard'
 import { products, type GrowingMethod, type PackSize } from '@/data/products'
 import { filterProducts } from '@/lib/filterProducts'
+import { useT } from '@/i18n'
 import { usePageMeta } from '@/lib/usePageMeta'
 
 const methods: Array<GrowingMethod | 'all'> = ['all', 'Greenhouse grown', 'Open field']
@@ -18,7 +19,11 @@ const gallery = [
 ]
 
 export default function Produce() {
-  usePageMeta({ title: 'Our produce', description: 'Cucumbers, red and yellow capsicum, chillies, butternuts, broccoli, cauliflower and zucchini in wholesale pack sizes from our Karatina farm and contracted Kenyan growers.' })
+  const t = useT()
+  usePageMeta({
+    title: t('Our produce'),
+    description: t('Cucumbers, red and yellow capsicum, chillies, butternuts, broccoli, cauliflower and zucchini in wholesale pack sizes from our Karatina farm and contracted Kenyan growers.'),
+  })
   const [query, setQuery] = useState('')
   const [method, setMethod] = useState<GrowingMethod | 'all'>('all')
   const [pack, setPack] = useState<PackSize | 'any'>('any')
@@ -38,13 +43,10 @@ export default function Produce() {
   return (
     <>
       <section className="container-page pt-14">
-        <p className="eyebrow">Wholesale &amp; retail</p>
-        <h1 className="mt-2 text-4xl font-extrabold md:text-5xl">Our produce</h1>
+        <p className="eyebrow">{t('Wholesale & retail')}</p>
+        <h1 className="mt-2 text-4xl font-extrabold md:text-5xl">{t('Our produce')}</h1>
         <p className="mt-4 max-w-3xl text-bark-soft">
-          Nine focused lines, mostly grown in open field and greenhouse, supplied consistently to
-          traders, grocers, hotels and households at Marikiti and City Park, from our Karatina farm
-          and commercial growers across Kenya. Our pack sizes start from 10kg, 20kg, 50kg and
-          100kg, up to full tonnage on order.
+          {t('Nine focused lines, mostly grown in open field and greenhouse, supplied consistently to traders, grocers, hotels and households at Marikiti and City Park, from our Karatina farm and commercial growers across Kenya. Our pack sizes start from 10kg, 20kg, 50kg and 100kg, up to full tonnage on order.')}
         </p>
 
         {/* Filters */}
@@ -58,15 +60,15 @@ export default function Produce() {
               type="search"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search produce, e.g. courgette, bell pepper, cucumber"
-              aria-label="Search produce"
+              placeholder={t('Search produce, e.g. courgette, bell pepper, cucumber')}
+              aria-label={t('Search produce')}
               className="w-full rounded-xl border border-line bg-cream py-3 pl-10 pr-10 text-sm outline-none focus:border-olive"
             />
             {query && (
               <button
                 type="button"
                 onClick={() => setQuery('')}
-                aria-label="Clear search"
+                aria-label={t('Clear search')}
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-bark-soft hover:text-bark"
               >
                 <X size={16} />
@@ -74,7 +76,7 @@ export default function Produce() {
             )}
           </div>
 
-          <div className="flex flex-wrap gap-2" role="group" aria-label="Growing method">
+          <div className="flex flex-wrap gap-2" role="group" aria-label={t('Growing method')}>
             {methods.map((m) => (
               <button
                 key={m}
@@ -83,14 +85,14 @@ export default function Produce() {
                 data-active={method === m}
                 onClick={() => setMethod(m)}
               >
-                {m === 'all' ? 'All growing methods' : m}
+                {m === 'all' ? t('All growing methods') : t(m)}
               </button>
             ))}
           </div>
 
-          <div className="flex flex-wrap items-center gap-2" role="group" aria-label="Pack size">
+          <div className="flex flex-wrap items-center gap-2" role="group" aria-label={t('Pack size')}>
             <span className="mr-1 text-xs font-semibold uppercase tracking-wide text-bark-soft">
-              Pack size
+              {t('Pack size')}
             </span>
             {packs.map((p) => (
               <button
@@ -100,14 +102,14 @@ export default function Produce() {
                 data-active={pack === p}
                 onClick={() => setPack(p)}
               >
-                {p === 'any' ? 'Any' : p}
+                {p === 'any' ? t('Any') : p === 'tonnes' ? t('tonnes') : p}
               </button>
             ))}
           </div>
         </div>
 
         <p className="mt-6 text-sm text-bark-soft" aria-live="polite">
-          {results.length} of {products.length} lines
+          {t('{n} of {total} lines', { n: results.length, total: products.length })}
         </p>
 
         {results.length > 0 ? (
@@ -118,13 +120,13 @@ export default function Produce() {
           </div>
         ) : (
           <div className="card mt-4 p-8 text-center">
-            <p className="font-semibold">No produce matches those filters.</p>
+            <p className="font-semibold">{t('No produce matches those filters.')}</p>
             <p className="mt-1 text-sm text-bark-soft">
-              Try a different word or pack size, or ask us. We can often source what is not listed.
+              {t('Try a different word or pack size, or ask us. We can often source what is not listed.')}
             </p>
             {isFiltered && (
               <button type="button" onClick={clearFilters} className="btn btn-secondary mt-5">
-                Clear filters
+                {t('Clear filters')}
               </button>
             )}
           </div>
@@ -133,12 +135,10 @@ export default function Produce() {
 
       {/* Greenhouse gallery */}
       <section className="container-page py-16">
-        <p className="eyebrow">Inside our greenhouses</p>
-        <h2 className="mt-2 text-3xl font-bold md:text-4xl">Capsicum, from seedling to fruit</h2>
+        <p className="eyebrow">{t('Inside our greenhouses')}</p>
+        <h2 className="mt-2 text-3xl font-bold md:text-4xl">{t('Capsicum, from seedling to fruit')}</h2>
         <p className="mt-3 max-w-3xl text-bark-soft">
-          Our red and yellow capsicum start as transplanted seedlings on drip lines and are
-          trellised through fruiting. They are picked green for trade or held on the plant until
-          they colour up.
+          {t('Our red and yellow capsicum start as transplanted seedlings on drip lines and are trellised through fruiting. They are picked green for trade or held on the plant until they colour up.')}
         </p>
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {gallery.map((g) => (
@@ -151,14 +151,13 @@ export default function Produce() {
       <section className="container-page pb-4">
         <div className="flex flex-col items-start justify-between gap-5 rounded-3xl bg-olive-dark p-8 text-white md:flex-row md:items-center md:p-10">
           <div>
-            <h2 className="text-2xl font-bold md:text-3xl">Need volume pricing?</h2>
+            <h2 className="text-2xl font-bold md:text-3xl">{t('Need volume pricing?')}</h2>
             <p className="mt-2 max-w-xl text-white/85">
-              Tell us your crop, quantity and delivery point and we will quote from the next
-              available batch.
+              {t('Tell us your crop, quantity and delivery point and we will quote from the next available batch.')}
             </p>
           </div>
           <Link to="/quote" className="btn shrink-0 bg-sun text-bark hover:bg-sun-dark">
-            Request a quote <ArrowRight size={18} />
+            {t('Request a quote')} <ArrowRight size={18} />
           </Link>
         </div>
       </section>

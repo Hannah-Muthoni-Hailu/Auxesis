@@ -1,3 +1,5 @@
+import { currentLang } from '@/i18n'
+
 // Types and pure helpers for production batches. No network code here.
 
 export const STAGES = [
@@ -78,6 +80,7 @@ export interface BatchFilters {
 }
 
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+const MONTHS_SW = ['Jan', 'Feb', 'Mac', 'Apr', 'Mei', 'Jun', 'Jul', 'Ago', 'Sep', 'Okt', 'Nov', 'Des']
 
 // "2026-05-25" -> "25 May 2026". Parsed by hand so time zones can never shift the day.
 export function formatDate(iso: string | null | undefined): string {
@@ -85,7 +88,7 @@ export function formatDate(iso: string | null | undefined): string {
   const match = /^(\d{4})-(\d{2})-(\d{2})/.exec(iso)
   if (!match) return '—'
   const [, year, month, day] = match
-  const monthName = MONTHS[Number(month) - 1]
+  const monthName = (currentLang() === 'sw' ? MONTHS_SW : MONTHS)[Number(month) - 1]
   if (!monthName) return '—'
   return `${Number(day)} ${monthName} ${year}`
 }

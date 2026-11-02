@@ -89,3 +89,17 @@ Add your own pictures and they appear automatically:
 
 Built: layout, Home, Produce, Farm Tracker, About, FAQ, Contact, quote enquiry form and staff inbox, sign-in, farmer portal, staff farm management, database rules.
 Ready to deploy: see `DEPLOY.md`.
+
+## Languages (English / Kiswahili)
+
+The EN / SW switch in the header translates every public page. Texts are keyed by their English wording,
+so pages call `t('English text')`, and the Swahili is in `src/i18n/sw.ts`. A text with no Swahili entry
+shows in English. Texts in `{braces}` are filled in by the page, so keep them as they are.
+
+- To change a Swahili wording, edit its line in `src/i18n/sw.ts`.
+- To add text to a page, wrap it in `t()` and add the Swahili line. `src/i18n/coverage.test.tsx` renders
+  every public page in Swahili and fails if any text has no translation.
+- Not translated on purpose: the staff portal, text typed into the database (farm names, notes, counties),
+  the WhatsApp pre-filled message, and the static meta tags in `index.html`.
+- The Swahili has not been reviewed by a native speaker yet. Have someone check it before launch,
+  especially the FAQ, payment and fee wording.

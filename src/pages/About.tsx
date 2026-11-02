@@ -1,6 +1,7 @@
 import { ArrowRight, Handshake, Sprout, Store } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { site } from '@/config/site'
+import { useT } from '@/i18n'
 import { usePageMeta } from '@/lib/usePageMeta'
 
 const sides = [
@@ -37,28 +38,27 @@ const goals = [
 ]
 
 export default function About() {
-  usePageMeta({ title: 'About us', description: 'Auxesis grows and trades fresh produce from Karatina, Nyeri County to Marikiti and City Park markets in Nairobi, working directly with Kenyan farmers.' })
+  const t = useT()
+  usePageMeta({
+    title: t('About us'),
+    description: t('Auxesis grows and trades fresh produce from Karatina, Nyeri County to Marikiti and City Park markets in Nairobi, working directly with Kenyan farmers.'),
+  })
   return (
     <>
       <section className="container-page pt-14">
-        <p className="eyebrow">Who we are</p>
+        <p className="eyebrow">{t('Who we are')}</p>
         <h1 className="mt-2 text-4xl font-extrabold md:text-5xl">
           {site.name} {site.tagline}
         </h1>
         <p className="mt-4 max-w-3xl text-lg text-bark-soft">
-          We grow, buy and connect Kenyan fresh produce to market: cucumbers (local and English),
-          red and yellow capsicum, chillies and butternuts, trading wholesale and retail at
-          Marikiti and City Park, Nairobi.
+          {t('We grow, buy and connect Kenyan fresh produce to market: cucumbers (local and English), red and yellow capsicum, chillies and butternuts, trading wholesale and retail at Marikiti and City Park, Nairobi.')}
         </p>
       </section>
 
       <section className="container-page py-14">
-        <h2 className="text-2xl font-bold md:text-3xl">Two sides of the same supply chain</h2>
+        <h2 className="text-2xl font-bold md:text-3xl">{t('Two sides of the same supply chain')}</h2>
         <p className="mt-3 max-w-3xl text-bark-soft">
-          We produce on our own farm in Karatina, Nyeri County, and we aggregate from commercial
-          growers and agri investors across Kenya. Growing ourselves keeps us honest about
-          agronomy, timelines and quality; sourcing widely keeps supply steady through the
-          seasons.
+          {t('We produce on our own farm in Karatina, Nyeri County, and we aggregate from commercial growers and agri investors across Kenya. Growing ourselves keeps us honest about agronomy, timelines and quality; sourcing widely keeps supply steady through the seasons.')}
         </p>
         <div className="mt-8 grid gap-5 md:grid-cols-3">
           {sides.map(({ icon: Icon, title, text }) => (
@@ -66,8 +66,8 @@ export default function About() {
               <span className="grid h-11 w-11 place-items-center rounded-xl bg-olive/10 text-olive-dark">
                 <Icon size={22} />
               </span>
-              <h3 className="text-lg font-semibold">{title}</h3>
-              <p className="text-sm text-bark-soft">{text}</p>
+              <h3 className="text-lg font-semibold">{t(title)}</h3>
+              <p className="text-sm text-bark-soft">{t(text)}</p>
             </div>
           ))}
         </div>
@@ -76,29 +76,26 @@ export default function About() {
       <section className="border-y border-line bg-cream-dark/60">
         <div className="container-page grid gap-6 py-14 md:grid-cols-[1.2fr_1fr] md:items-center">
           <div>
-            <h2 className="text-2xl font-bold md:text-3xl">Traceability is the product</h2>
+            <h2 className="text-2xl font-bold md:text-3xl">{t('Traceability is the product')}</h2>
             <p className="mt-3 text-bark-soft">
-              Every batch we handle is registered against a farm, a crop and a set of dates:
-              planted, expected harvest, harvested, graded, market-ready and dispatched. Buyers can
-              follow that record publicly on our farm tracker, with no guesswork about where
-              produce came from or how fresh it is.
+              {t('Every batch we handle is registered against a farm, a crop and a set of dates: planted, expected harvest, harvested, graded, market-ready and dispatched. Buyers can follow that record publicly on our farm tracker, with no guesswork about where produce came from or how fresh it is.')}
             </p>
           </div>
           <div className="md:justify-self-end">
             <Link to="/tracker" className="btn btn-primary">
-              See the farm tracker <ArrowRight size={18} />
+              {t('See the farm tracker')} <ArrowRight size={18} />
             </Link>
           </div>
         </div>
       </section>
 
       <section className="container-page py-14">
-        <h2 className="text-2xl font-bold md:text-3xl">What we are working towards</h2>
+        <h2 className="text-2xl font-bold md:text-3xl">{t('What we are working towards')}</h2>
         <div className="mt-8 grid gap-5 md:grid-cols-3">
           {goals.map((g) => (
             <div key={g.title} className="border-l-4 border-sun pl-4">
-              <h3 className="text-lg font-semibold">{g.title}</h3>
-              <p className="mt-1 text-sm text-bark-soft">{g.text}</p>
+              <h3 className="text-lg font-semibold">{t(g.title)}</h3>
+              <p className="mt-1 text-sm text-bark-soft">{t(g.text)}</p>
             </div>
           ))}
         </div>

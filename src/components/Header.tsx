@@ -1,17 +1,16 @@
-import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { nav, site, whatsappLink } from '@/config/site'
+import { useLang } from '@/i18n'
 import Logo from './Logo'
 
 export default function Header() {
-  // Not wired to translations yet: it only switches which button looks selected.
-  const [lang, setLang] = useState<'EN' | 'SW'>('EN')
+  const { lang, setLang, t } = useLang()
 
   return (
     <header className="border-b bg-background">
       <div className="container-x flex flex-wrap items-center justify-between gap-4 py-4">
         <Logo />
-        <nav className="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm" aria-label="Main">
+        <nav className="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm" aria-label={t('Main')}>
           {nav.map((n) => (
             <NavLink
               key={n.to}
@@ -19,21 +18,22 @@ export default function Header() {
               end={n.to === '/'}
               className={({ isActive }) => (isActive ? 'text-primary font-medium' : 'hover:text-primary')}
             >
-              {n.label}
+              {t(n.label)}
             </NavLink>
           ))}
         </nav>
         <div className="flex items-center gap-2">
           <div className="flex overflow-hidden rounded-full border text-xs">
-            {(['EN', 'SW'] as const).map((l) => (
+            {(['en', 'sw'] as const).map((l) => (
               <button
                 key={l}
                 type="button"
                 onClick={() => setLang(l)}
                 aria-pressed={lang === l}
+                aria-label={l === 'en' ? 'English' : 'Kiswahili'}
                 className={`px-3 py-1.5 ${lang === l ? 'bg-primary text-primary-foreground' : ''}`}
               >
-                {l}
+                {l.toUpperCase()}
               </button>
             ))}
           </div>
@@ -41,10 +41,10 @@ export default function Header() {
             href={whatsappLink()}
             target="_blank"
             rel="noopener noreferrer"
-            aria-label={`WhatsApp us on ${site.phone}`}
+            aria-label={t('WhatsApp us on {phone}', { phone: site.phone })}
             className="rounded-full border border-foreground px-4 py-1.5 text-sm font-medium hover:bg-foreground hover:text-background"
           >
-            WhatsApp us
+            {t('WhatsApp us')}
           </a>
         </div>
       </div>

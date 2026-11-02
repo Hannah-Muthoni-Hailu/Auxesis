@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form'
 import Field from '@/components/Field'
 import { site, whatsappLink } from '@/config/site'
 import { useSubmitEnquiry } from '@/hooks/useEnquiries'
+import { useT } from '@/i18n'
 import {
   enquiryCropOptions,
   enquirySchema,
@@ -20,6 +21,7 @@ interface Props {
 }
 
 export default function QuoteForm({ initialCrop }: Props) {
+  const t = useT()
   const submit = useSubmitEnquiry()
   const [sent, setSent] = useState<EnquiryPayload | null>(null)
 
@@ -56,10 +58,9 @@ export default function QuoteForm({ initialCrop }: Props) {
     return (
       <div className="card p-6 md:p-8" role="status">
         <CheckCircle2 className="text-olive" size={36} aria-hidden />
-        <h2 className="mt-3 text-2xl font-bold">Thank you, {sent.name.split(' ')[0]}</h2>
+        <h2 className="mt-3 text-2xl font-bold">{t('Thank you, {name}', { name: sent.name.split(' ')[0] })}</h2>
         <p className="mt-2 text-bark-soft">
-          We have your request and will call or message you on {sent.phone}. Our stall is open{' '}
-          {site.hours.split('.')[0].toLowerCase()}.
+          {t('We have your request and will call or message you on {phone}. Our stall is open {hours}.', { phone: sent.phone, hours: t(site.hours).split('.')[0] })}
         </p>
         <div className="mt-6 flex flex-col gap-3 sm:flex-row">
           <a
@@ -68,7 +69,7 @@ export default function QuoteForm({ initialCrop }: Props) {
             rel="noopener noreferrer"
             className="btn btn-primary"
           >
-            <MessageCircle size={18} /> Also send on WhatsApp
+            <MessageCircle size={18} /> {t('Also send on WhatsApp')}
           </a>
           <button
             type="button"
@@ -79,7 +80,7 @@ export default function QuoteForm({ initialCrop }: Props) {
               setSent(null)
             }}
           >
-            Send another request
+            {t('Send another request')}
           </button>
         </div>
       </div>
@@ -110,10 +111,10 @@ export default function QuoteForm({ initialCrop }: Props) {
 
         <Field label="Produce" htmlFor="crop" error={errors.crop}>
           <select id="crop" className="input" {...register('crop')}>
-            <option value="">Choose a crop…</option>
+            <option value="">{t('Choose a crop…')}</option>
             {enquiryCropOptions.map((c) => (
               <option key={c} value={c}>
-                {c}
+                {t(c)}
               </option>
             ))}
           </select>
@@ -144,13 +145,13 @@ export default function QuoteForm({ initialCrop }: Props) {
 
       {/* Honeypot: hidden from people and screen readers. */}
       <div aria-hidden="true" className="absolute -left-[9999px] h-0 w-0 overflow-hidden">
-        <label htmlFor="website">Leave this empty</label>
+        <label htmlFor="website">{t('Leave this empty')}</label>
         <input id="website" tabIndex={-1} autoComplete="off" {...register('website')} />
       </div>
 
       {submit.isError && (
         <p role="alert" className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-800">
-          We could not send your request. Please try again, or message us on{' '}
+          {t('We could not send your request. Please try again, or message us on')}{' '}
           <a
             href={whatsappLink('Hello Auxesis, I would like a quote.')}
             target="_blank"
@@ -164,7 +165,7 @@ export default function QuoteForm({ initialCrop }: Props) {
       )}
 
       <button type="submit" className="btn btn-primary w-full sm:w-auto" disabled={submit.isPending}>
-        {submit.isPending ? 'Sending…' : 'Request a quote'}
+        {submit.isPending ? t('Sending…') : t('Request a quote')}
       </button>
     </form>
   )

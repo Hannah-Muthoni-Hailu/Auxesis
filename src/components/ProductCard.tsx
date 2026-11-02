@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import type { Product } from '@/data/products'
+import { useT } from '@/i18n'
 
 interface Props {
   product: Product
@@ -8,6 +9,7 @@ interface Props {
 }
 
 export default function ProductCard({ product, showDetails = false }: Props) {
+  const t = useT()
   // If no photo has been added for this crop, fall back to the coloured panel.
   const [hasPhoto, setHasPhoto] = useState(true)
 
@@ -17,7 +19,7 @@ export default function ProductCard({ product, showDetails = false }: Props) {
         {hasPhoto && (
           <img
             src={`/images/produce/${product.slug}.jpg`}
-            alt={product.name}
+            alt={t(product.name)}
             loading="lazy"
             className="absolute inset-0 h-full w-full object-cover"
             onError={() => setHasPhoto(false)}
@@ -25,19 +27,19 @@ export default function ProductCard({ product, showDetails = false }: Props) {
         )}
       </div>
       <div className="space-y-2 p-5">
-        <h3 className="text-lg font-semibold">{product.name}</h3>
-        <p className="text-sm text-bark-soft">{product.blurb}</p>
+        <h3 className="text-lg font-semibold">{t(product.name)}</h3>
+        <p className="text-sm text-bark-soft">{t(product.blurb)}</p>
         {showDetails && (
           <>
             <p className="pt-1 text-xs font-semibold uppercase tracking-wide text-olive-dark">
-              {product.method}
+              {t(product.method)}
             </p>
-            <p className="text-xs text-bark-soft">{product.packNote}</p>
+            <p className="text-xs text-bark-soft">{t(product.packNote)}</p>
             <Link
               to={`/quote?crop=${encodeURIComponent(product.name)}`}
               className="inline-block pt-1 text-sm font-semibold text-olive-dark hover:underline"
             >
-              Request a quote
+              {t('Request a quote')}
             </Link>
           </>
         )}
