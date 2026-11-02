@@ -1,4 +1,4 @@
-import { screen, within } from '@testing-library/react'
+import { screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { createFakeDb, type FakeDb } from '@/test/fakeDb'
@@ -11,45 +11,59 @@ vi.mock('@/lib/supabase', () => ({
   supabase: { from: (table: string) => holder.db.from(table) },
 }))
 
-describe('Farm tracker (public)', () => {
+describe('Trace a batch', () => {
   beforeEach(() => {
     holder.db = createFakeDb({
       production_batches: [
-        batchRow({ id: '1', crop: 'English Cucumber', stage: 'ready_for_market', farm_id: 'fa', farms: farmA, quantity_kg: 1800 }),
-        batchRow({ id: '2', crop: 'Chillies', batch_code: 'AUX-SAM-102', stage: 'harvesting', farm_id: 'fb', farms: farmB, quantity_kg: 350 }),
+        batchRow({
+          id: '1', batch_code: 'AUX-KAR-001', crop: 'English Cucumber', stage: 'harvesting',
+          block: 'Greenhouse 2', farm_id: 'fa', farms: farmA,
+          batch_events: [
+            { id: 'e1', batch_id: '1', stage: 'planted', occurred_on: '2026-08-01' },
+            { id: 'e2', batch_id: '1', stage: 'harvesting', occurred_on: '2026-10-20' },
+          ],
+        }),
+        batchRow({ id: '2', batch_code: 'AUX-SAM-102', crop: 'Chillies', stage: 'planted', farm_id: 'fb', farms: farmB }),
       ],
     })
   })
 
-  it('shows totals from the database', async () => {
-    renderWithProviders(<Traceability />)
-
-    expect(await screen.findByText('English Cucumber', { selector: 'h3' })).toBeInTheDocument()
-    expect(screen.getByText('2,150 kg')).toBeInTheDocument()
-    expect(screen.getByText('Farms in production').previousElementSibling).toHaveTextContent('2')
-    expect(screen.getByText('Batches ready for market').previousElementSibling).toHaveTextContent('1')
-  })
-
-  it('filters by crop', async () => {
+  it('traces a batch from a typed code, ignoring case, and shows its dated journey', async () => {
     const user = userEvent.setup()
     renderWithProviders(<Traceability />)
-    await screen.findByText('English Cucumber', { selector: 'h3' })
+    await screen.findByRole('button', { name: 'AUX-KAR-001' })
 
-    const cropFilters = screen.getByRole('group', { name: 'Crop' })
-    await user.click(within(cropFilters).getByRole('button', { name: 'Chillies' }))
+    await user.type(screen.getByLabelText('Batch code'), 'aux-kar-001')
+    await user.click(screen.getByRole('button', { name: /Trace batch/ }))
 
-    expect(screen.queryByText('English Cucumber', { selector: 'h3' })).not.toBeInTheDocument()
-    expect(screen.getByText('Chillies', { selector: 'h3' })).toBeInTheDocument()
+    expect(await screen.findByText(/Journey of English Cucumber · Greenhouse 2/)).toBeInTheDocument()
+    expect(screen.getByText('1 Aug 2026')).toBeInTheDocument()
+    expect(screen.getByText('20 Oct 2026')).toBeInTheDocument()
+    expect(screen.getByText('Now')).toBeInTheDocument()
+    const lookup = holder.db.calls.find((c) => c.filters.batch_code)
+    expect(lookup?.filters.batch_code).toBe('AUX-KAR-001')
   })
 
-  it('shows an empty-state message when nothing matches', async () => {
+  it('opens straight to a batch from a ?code= link', async () => {
+    renderWithProviders(<Traceability />, '/traceability?code=AUX-KAR-001')
+    expect(await screen.findByText(/Journey of English Cucumber/)).toBeInTheDocument()
+  })
+
+  it('offers sample codes that run the lookup', async () => {
     const user = userEvent.setup()
     renderWithProviders(<Traceability />)
-    await screen.findByText('English Cucumber', { selector: 'h3' })
+    await screen.findByRole('button', { name: 'AUX-KAR-001' })
+    await user.click(screen.getByRole('button', { name: 'AUX-SAM-102' }))
+    expect(await screen.findByText(/Journey of Chillies/)).toBeInTheDocument()
+  })
 
-    const stageFilters = screen.getByRole('group', { name: 'Stage' })
-    await user.click(within(stageFilters).getByRole('button', { name: 'Dispatched' }))
-
-    expect(screen.getByText(/no batches match those filters/i)).toBeInTheDocument()
+  it('says so, with a contact link, when the code is not found', async () => {
+    const user = userEvent.setup()
+    renderWithProviders(<Traceability />)
+    await screen.findByRole('button', { name: 'AUX-KAR-001' })
+    await user.type(screen.getByLabelText('Batch code'), 'NOPE-1')
+    await user.click(screen.getByRole('button', { name: /Trace batch/ }))
+    expect(await screen.findByText(/no batch with the code/i)).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'contact us' })).toHaveAttribute('href', '/contact')
   })
 })

@@ -22,6 +22,7 @@ export const batchFormSchema = z
       .trim()
       .regex(/^\d+$/, 'Enter the quantity in whole kilograms')
       .refine((v) => !/^\d+$/.test(v) || Number(v) <= 10_000_000, 'That quantity looks too large'),
+    block: z.string().trim().max(60, 'Keep this under 60 characters'),
     grade: z.string().trim().max(10, 'Keep this short, for example A or A/B'),
     notes: z.string().trim().max(500, 'Keep notes under 500 characters'),
   })
@@ -60,6 +61,7 @@ export interface BatchPayload {
   harvested_on: string | null
   market_ready_on: string | null
   quantity_kg: number
+  block: string | null
   grade: string | null
   notes: string | null
 }
@@ -77,6 +79,7 @@ export function toPayload(v: BatchFormValues): BatchPayload {
     harvested_on: blankToNull(v.harvested_on),
     market_ready_on: blankToNull(v.market_ready_on),
     quantity_kg: Number(v.quantity_kg),
+    block: blankToNull(v.block),
     grade: blankToNull(v.grade),
     notes: blankToNull(v.notes),
   }
@@ -93,6 +96,7 @@ export function formValuesFromBatch(b: Batch): BatchFormValues {
     harvested_on: b.harvested_on ?? '',
     market_ready_on: b.market_ready_on ?? '',
     quantity_kg: String(b.quantity_kg),
+    block: b.block ?? '',
     grade: b.grade ?? '',
     notes: b.notes ?? '',
   }

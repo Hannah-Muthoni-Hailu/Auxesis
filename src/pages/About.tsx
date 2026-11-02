@@ -12,7 +12,7 @@ const sides = [
   {
     icon: Handshake,
     title: 'Farmer partnerships',
-    text: 'Agreed varieties, planting calendars and farm-gate prices with growers across the country.',
+    text: 'We buy from contracted farmers at an agreed grade and price, and link farmers to buyers for crops we do not grow, with a fee only when a sale is completed.',
   },
   {
     icon: Store,
@@ -46,7 +46,7 @@ export default function About() {
           {site.name} {site.tagline}
         </h1>
         <p className="mt-4 max-w-3xl text-lg text-bark-soft">
-          We source, grow, grade and sell fresh vegetables in Kenya: cucumbers (local and English),
+          We grow, buy and connect Kenyan fresh produce to market: cucumbers (local and English),
           red and yellow capsicum, chillies and butternuts, trading wholesale and retail at
           Marikiti and City Park, Nairobi.
         </p>
@@ -85,7 +85,7 @@ export default function About() {
             </p>
           </div>
           <div className="md:justify-self-end">
-            <Link to="/traceability" className="btn btn-primary">
+            <Link to="/tracker" className="btn btn-primary">
               See the farm tracker <ArrowRight size={18} />
             </Link>
           </div>

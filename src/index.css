@@ -1,27 +1,64 @@
 @import "tailwindcss";
 
-@theme {
-  --color-cream: #faf5ea;
-  --color-cream-dark: #f1e9d6;
-  --color-bark: #3a2a14;
-  --color-bark-soft: #6b5a43;
-  --color-olive: #6b8a23;
-  --color-olive-dark: #55701a;
-  --color-sun: #e08a1e;
-  --color-sun-dark: #c4750f;
-  --color-line: #e4dac3;
+@custom-variant dark (&:is(.dark *));
 
-  --font-display: "Outfit", ui-sans-serif, system-ui, sans-serif;
+@theme inline {
   --font-sans: "Figtree", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Outfit", ui-sans-serif, system-ui, sans-serif;
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-sun: var(--sun);
+  --color-sun-dark: var(--sun-dark);
+  --color-olive-dark: var(--olive-dark);
+  --color-cream-dark: var(--cream-dark);
+  --color-track: var(--track);
+
+  /* Older names used by the other pages, pointing at the same palette. */
+  --color-cream: var(--background);
+  --color-bark: var(--foreground);
+  --color-bark-soft: var(--muted-foreground);
+  --color-olive: var(--primary);
+  --color-line: var(--border);
+}
+
+:root {
+  --radius: 0.875rem;
+  --background: oklch(0.975 0.014 85);
+  --cream-dark: oklch(0.935 0.025 85);
+  --foreground: oklch(0.29 0.045 70);
+  --card: oklch(1 0 0);
+  --primary: oklch(0.57 0.13 125);
+  --olive-dark: oklch(0.5 0.12 125);
+  --primary-foreground: oklch(1 0 0);
+  --sun: oklch(0.7 0.15 65);
+  --sun-dark: oklch(0.62 0.14 62);
+  --muted: oklch(0.935 0.025 85);
+  --muted-foreground: oklch(0.47 0.04 70);
+  --border: oklch(0.89 0.03 85);
+  --track: oklch(0.9 0.025 85);
 }
 
 @layer base {
+  * {
+    border-color: var(--color-border);
+  }
   html {
     scroll-behavior: smooth;
   }
   body {
-    background-color: var(--color-cream);
-    color: var(--color-bark);
+    background-color: var(--color-background);
+    color: var(--color-foreground);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
   }
@@ -32,9 +69,15 @@
     font-family: var(--font-display);
     letter-spacing: -0.02em;
   }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
 }
 
 @layer components {
+  .container-x,
   .container-page {
     margin-inline: auto;
     width: 100%;
@@ -61,15 +104,15 @@
     cursor: pointer;
   }
   .btn-primary {
-    background-color: var(--color-olive);
+    background-color: var(--color-primary);
     color: white;
   }
   .btn-primary:hover {
     background-color: var(--color-olive-dark);
   }
   .btn-secondary {
-    border: 1px solid var(--color-bark);
-    color: var(--color-bark);
+    border: 1px solid var(--color-foreground);
+    color: var(--color-foreground);
   }
   .btn-secondary:hover {
     background-color: var(--color-cream-dark);
@@ -77,14 +120,14 @@
   .input {
     width: 100%;
     border-radius: 0.75rem;
-    border: 1px solid var(--color-line);
+    border: 1px solid var(--color-border);
     background-color: white;
     padding: 0.7rem 0.9rem;
     font-size: 1rem;
     outline: none;
   }
   .input:focus {
-    border-color: var(--color-olive);
+    border-color: var(--color-primary);
     box-shadow: 0 0 0 3px rgb(107 138 35 / 0.18);
   }
   .btn:disabled {
@@ -93,12 +136,12 @@
   }
   .card {
     border-radius: 1rem;
-    border: 1px solid var(--color-line);
+    border: 1px solid var(--color-border);
     background-color: white;
   }
   .chip {
     border-radius: 9999px;
-    border: 1px solid var(--color-line);
+    border: 1px solid var(--color-border);
     background-color: white;
     padding: 0.35rem 0.9rem;
     font-size: 0.85rem;
@@ -107,11 +150,11 @@
     transition: background-color 0.15s, color 0.15s, border-color 0.15s;
   }
   .chip:hover {
-    border-color: var(--color-olive);
+    border-color: var(--color-primary);
   }
   .chip[data-active="true"] {
-    background-color: var(--color-olive);
-    border-color: var(--color-olive);
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
     color: white;
   }
 }

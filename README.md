@@ -30,6 +30,7 @@ Run each SQL file in the Supabase dashboard: **SQL Editor > New query > paste > 
 
 1. `supabase/schema.sql`: tables, public-read rules and sample data. *(Already done.)*
 2. `supabase/002_farmer_access.sql`: farmer access, automatic batch codes, and the staff tools. Safe to run more than once.
+3. `supabase/003_trace_and_registrations.sql`: stage history for the batch-code lookup, a block/field name on batches, and the farmer registrations table. Safe to run more than once. Supabase may warn about a "destructive operation"; that is harmless here.
 3. Create your own login: **Authentication > Users > Add user**. Enter your email and a password and tick **Auto Confirm User**.
 4. Edit `supabase/make_staff.sql`, put your email in it, and run it. This makes you Auxesis staff.
 5. Turn off public sign-up: **Authentication**, then the sign-in settings, then switch off **Allow new users to sign up**. (Do this *after* step 3.) If adding farmer accounts is refused while sign-up is off, switch it on briefly, add the account, then switch it off again.
@@ -47,7 +48,13 @@ A farmer can add and update batches only on the farm(s) they are linked to. They
 
 Visitors fill in the form at `/quote` (also linked from Produce, Contact and the footer; each produce card pre-selects its crop). Requests are saved to the `enquiries` table.
 
-Staff read them in **My batches > Quote enquiries**, where each request has Call and WhatsApp buttons and a Delete button. Only staff can read or delete enquiries; visitors can only add one. A hidden bot-trap field stops most spam. If spam ever gets through, tell us and we will add a stronger check.
+## Farm tracker, batch lookup and farmer registration
+
+The tracker at `/traceability` has a stage pipeline (tap a stage to filter) and a **Trace a batch** box: type a batch code, or open `/traceability?code=AUX-KAR-001`, to see the farm, block, and the date the batch reached each stage. Dates are recorded automatically by the database whenever a batch changes stage.
+
+Farmers register at `/work-with-us`. Registrations are saved to `farmer_registrations`; staff read them in **My batches > Farmer registrations**, with Call, WhatsApp and Delete buttons.
+
+Staff read quote enquiries in **My batches > Quote enquiries**, where each request has Call and WhatsApp buttons and a Delete button. Only staff can read or delete enquiries; visitors can only add one. A hidden bot-trap field stops most spam. If spam ever gets through, tell us and we will add a stronger check.
 
 ## Putting it online
 

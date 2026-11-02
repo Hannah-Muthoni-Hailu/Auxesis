@@ -3,9 +3,9 @@ import { faqCount, faqGroups } from './faq'
 import { products } from './products'
 
 describe('faq data', () => {
-  it('has the 11 agreed questions, 8 for buyers and 3 for farmers', () => {
-    expect(faqCount).toBe(11)
-    expect(faqGroups.map((g) => g.items.length)).toEqual([8, 3])
+  it('has the 12 questions, 8 for buyers and 4 for farmers', () => {
+    expect(faqCount).toBe(12)
+    expect(faqGroups.map((g) => g.items.length)).toEqual([8, 4])
   })
 
   it('has a non-empty question and answer for every item, and no duplicates', () => {
@@ -26,9 +26,9 @@ describe('faq data', () => {
   })
 
   it('only links to pages that exist', () => {
-    const pages = ['/', '/produce', '/traceability', '/about', '/faq', '/contact', '/quote']
+    const pages = ['/', '/produce', '/traceability', '/tracker', '/stories', '/about', '/faq', '/work-with-us', '/contact', '/quote']
     for (const item of faqGroups.flatMap((g) => g.items)) {
-      if (item.link) expect(pages).toContain(item.link.to)
+      if (item.link) expect(pages).toContain(item.link.to.split('#')[0])
     }
   })
 })

@@ -34,12 +34,12 @@ export const faqGroups: FaqGroup[] = [
       {
         q: 'Where is the produce from?',
         a: 'Our own farm is in Karatina, Nyeri County. The rest comes from commercial growers we work with in other parts of Kenya. Every batch on the Farm Tracker shows which farm and county it came from.',
-        link: { to: '/traceability', label: 'See the Farm Tracker' },
+        link: { to: '/tracker', label: 'See the Farm Tracker' },
       },
       {
         q: 'What variety is it?',
         a: 'It depends on the crop and the grower, and the variety is recorded for each batch on the Farm Tracker. Tell us the crop when you ask for a quote and we will confirm the variety available.',
-        link: { to: '/traceability', label: 'See batches and varieties' },
+        link: { to: '/tracker', label: 'See batches and varieties' },
       },
       {
         q: 'Is it open field or greenhouse?',
@@ -60,7 +60,7 @@ export const faqGroups: FaqGroup[] = [
       {
         q: 'When is the next harvest?',
         a: 'Every batch on the Farm Tracker shows its stage and its expected harvest date, updated by the farmers who grow it. Check there for what is coming, or ask us about a crop you need.',
-        link: { to: '/traceability', label: 'Check expected harvest dates' },
+        link: { to: '/tracker', label: 'Check expected harvest dates' },
       },
       {
         // NEEDS CONFIRMING: supply periods per crop.
@@ -85,18 +85,22 @@ export const faqGroups: FaqGroup[] = [
         // NEEDS CONFIRMING: add real weekly capacity per crop if you want to state it.
         q: 'What is your offtake capacity?',
         a: 'It depends on the crop and the season, and it grows as we add buyers. Tell us what you grow, how much you expect per week and when it will be ready, and we will confirm what we can take before you plant.',
-        link: { to: '/contact', label: 'Talk to us' },
+        link: { to: '/work-with-us#farmers', label: 'Tell us what you grow' },
       },
       {
         q: 'If I grow for you, will I be sure of a consistent market?',
         a: 'We work with growers on agreed varieties, planting calendars and farm-gate prices, so you plant knowing what we will buy. The market is assured for what we agree together before planting: the crop, the volume, the timing and the quality. We cannot promise to buy produce that was not agreed.',
-        link: { to: '/contact', label: 'Partner with us' },
+        link: { to: '/work-with-us#farmers', label: 'Partner with us' },
       },
       {
-        // NEEDS CONFIRMING: replace with your real payment terms (for example days after delivery).
         q: 'What are your terms of payment?',
-        a: 'Payment terms are agreed in writing with each farmer and buyer before the first order or planting, and can differ by crop and volume. Call or WhatsApp us for the current terms.',
-        link: { to: '/contact', label: 'Contact us' },
+        a: 'Farmers are paid promptly, at the agreed grade and price, once produce is collected and graded. The details are confirmed with you at registration, before you plant.',
+        link: { to: '/work-with-us#farmers', label: 'Register your farm' },
+      },
+      {
+        q: 'Do you charge farmers a fee?',
+        a: 'There is no fee on crops Auxesis buys directly from you. For crops we do not buy ourselves, we link you to buyers in our network and charge a fee only when a sale is completed.',
+        link: { to: '/work-with-us#farmers', label: 'Register your farm' },
       },
     ],
   },

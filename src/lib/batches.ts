@@ -55,8 +55,21 @@ export interface Batch {
   quantity_kg: number
   grade: string | null
   notes: string | null
+  block?: string | null
   created_at: string
   farms: Farm | null
+}
+
+// The date a batch reached a stage. Recorded automatically by the database.
+export interface BatchEvent {
+  id: string
+  batch_id: string
+  stage: BatchStage
+  occurred_on: string
+}
+
+export interface TracedBatch extends Batch {
+  batch_events: BatchEvent[] | null
 }
 
 export interface BatchFilters {
@@ -138,4 +151,35 @@ export function summarise(batches: Batch[]): BatchSummary {
     readyForMarket: batches.filter((b) => b.stage === 'ready_for_market').length,
     volumeKg: batches.reduce((total, b) => total + b.quantity_kg, 0),
   }
+}
+
+// How many batches are at each stage, for the pipeline on the tracker.
+export function countByStage(batches: Batch[]): Record<BatchStage, number> {
+  const counts = Object.fromEntries(STAGES.map((s) => [s, 0])) as Record<BatchStage, number>
+  for (const b of batches) counts[b.stage] += 1
+  return counts
+}
+
+// Batch codes are typed by people: ignore spaces and letter case.
+export function normaliseCode(raw: string): string {
+  return raw.trim().replace(/\s+/g, '').toUpperCase()
+}
+
+export interface TimelineStep {
+  stage: BatchStage
+  state: 'done' | 'current' | 'upcoming'
+  /** The recorded date, when the database has one. */
+  date: string | null
+}
+
+// One step per stage. Stages up to the current one count as reached; a reached stage with
+// no recorded date (older batches) shows no date rather than a guessed one.
+export function buildTimeline(batch: Pick<Batch, 'stage'>, events: BatchEvent[] | null): TimelineStep[] {
+  const current = stageIndex(batch.stage)
+  const dates = new Map((events ?? []).map((e) => [e.stage, e.occurred_on]))
+  return STAGES.map((stage, i) => ({
+    stage,
+    state: i < current ? 'done' : i === current ? 'current' : 'upcoming',
+    date: i <= current ? (dates.get(stage) ?? null) : null,
+  }))
 }

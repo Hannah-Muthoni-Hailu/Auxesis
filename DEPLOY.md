@@ -17,6 +17,15 @@ Cloudflare sometimes renames menu items. If something here does not match your s
 2. Open the confirmation email and click the link.
 3. If asked what you want to do, you can skip past any "add a domain" prompts for now.
 
+## Before you deploy this version: update the database
+
+This version needs one database change, and it must go in **before** you deploy, or the tracker and the Add-a-batch form will error.
+
+1. In Supabase open **SQL Editor > New query**.
+2. Open `supabase/003_trace_and_registrations.sql` from the project folder, copy everything, paste it in, and click **Run**.
+3. Supabase may warn about a "destructive operation". That is harmless: it only replaces the rules defined in that file. Click to run anyway.
+4. It is safe to run twice.
+
 ## Part 2: Deploy the site (10 minutes)
 
 Open Command Prompt in the project folder (the one with `package.json`).
@@ -39,6 +48,8 @@ Go through this list on the live address, ideally on your phone as well:
 
 - [ ] Home and Produce pages load, and the Produce filters and search work.
 - [ ] **Farm Tracker** shows your 7 sample batches (4 farms, 2 ready, 13,000 kg).
+- [ ] On Farm Tracker, type `AUX-KAR-001` in **Trace a batch**. You should see its journey with dates. Tapping a stage in the pipeline filters the list.
+- [ ] Submit a test farmer registration at `/work-with-us`, check it under **My batches > Farmer registrations**, then delete it.
 - [ ] Open `/produce` directly in the address bar, then refresh. It should still load (not an error page).
 - [ ] Send a test quote request at `/quote`, then sign in and check it appears under **My batches > Quote enquiries**. Delete the test.
 - [ ] Sign in at `/auth` as yourself. Add a test batch, move it one stage, then delete it.

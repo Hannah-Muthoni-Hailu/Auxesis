@@ -40,6 +40,7 @@ export default function BatchForm({ farms, batch, onDone }: Props) {
           harvested_on: '',
           market_ready_on: '',
           quantity_kg: '',
+          block: '',
           grade: '',
           notes: '',
         },
@@ -118,6 +119,10 @@ export default function BatchForm({ farms, batch, onDone }: Props) {
 
         <Field label="Expected quantity (kg)" htmlFor="quantity_kg" error={errors.quantity_kg}>
           <input id="quantity_kg" inputMode="numeric" className="input" {...register('quantity_kg')} />
+        </Field>
+
+        <Field label="Block or field (optional)" htmlFor="block" error={errors.block} hint="For example Greenhouse 2">
+          <input id="block" className="input" {...register('block')} />
         </Field>
 
         <Field label="Grade (optional)" htmlFor="grade" error={errors.grade} hint="For example A or A/B">

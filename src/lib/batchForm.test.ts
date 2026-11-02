@@ -12,6 +12,7 @@ const valid: BatchFormValues = {
   harvested_on: '',
   market_ready_on: '',
   quantity_kg: '500',
+  block: ' Greenhouse 2 ',
   grade: 'A',
   notes: '',
 }
@@ -34,9 +35,14 @@ describe('batch form validation', () => {
       harvested_on: null,
       market_ready_on: null,
       quantity_kg: 500,
+      block: 'Greenhouse 2',
       grade: 'A',
       notes: null,
     })
+  })
+
+  it('rejects a block name over 60 characters', () => {
+    expect(fieldsWithProblems({ block: 'b'.repeat(61) })).toEqual(['block'])
   })
 
   it.each([

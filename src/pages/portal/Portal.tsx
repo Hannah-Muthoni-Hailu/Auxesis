@@ -1,4 +1,4 @@
-import { ArrowRight, Inbox, Plus, Users } from 'lucide-react'
+import { ArrowRight, Inbox, Plus, Sprout, Users } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '@/auth/useAuth'
@@ -59,6 +59,9 @@ export default function Portal() {
             <>
               <Link to="/portal/enquiries" className="btn btn-secondary">
                 <Inbox size={18} /> Quote enquiries
+              </Link>
+              <Link to="/portal/registrations" className="btn btn-secondary">
+                <Sprout size={18} /> Farmer registrations
               </Link>
               <Link to="/portal/farms" className="btn btn-secondary">
                 <Users size={18} /> Farms &amp; farmers

@@ -13,9 +13,10 @@ export const site = {
 
 export const nav = [
   { to: '/', label: 'Home' },
-  { to: '/produce', label: 'Produce' },
-  { to: '/traceability', label: 'Farm Tracker' },
-  { to: '/about', label: 'About' },
+  { to: '/work-with-us', label: 'Work with us' },
+  { to: '/traceability', label: 'Traceability' },
+  { to: '/tracker', label: 'Farm tracker & market board' },
+  { to: '/stories', label: 'Stories from the field' },
   { to: '/faq', label: 'FAQ' },
   { to: '/contact', label: 'Contact' },
 ] as const

@@ -106,3 +106,44 @@ describe('moving a batch forward', () => {
     expect(nextStage('dispatched')).toBeNull()
   })
 })
+
+describe('stage counts and batch-code lookup helpers', () => {
+  it('counts batches at each stage, including stages with none', async () => {
+    const { countByStage, STAGES } = await import('./batches')
+    const counts = countByStage([
+      { stage: 'planted' },
+      { stage: 'planted' },
+      { stage: 'dispatched' },
+    ] as never)
+    expect(counts.planted).toBe(2)
+    expect(counts.dispatched).toBe(1)
+    expect(counts.growing).toBe(0)
+    expect(Object.keys(counts)).toEqual([...STAGES])
+  })
+
+  it('ignores spaces and letter case in a typed code', async () => {
+    const { normaliseCode } = await import('./batches')
+    expect(normaliseCode('  aux-kar 001 ')).toBe('AUX-KAR001')
+    expect(normaliseCode('aux-kar-001')).toBe('AUX-KAR-001')
+  })
+
+  it('builds a timeline: reached stages dated, current marked, future empty', async () => {
+    const { buildTimeline } = await import('./batches')
+    const steps = buildTimeline({ stage: 'harvesting' }, [
+      { id: '1', batch_id: 'b', stage: 'planted', occurred_on: '2026-08-01' },
+      { id: '2', batch_id: 'b', stage: 'harvesting', occurred_on: '2026-10-20' },
+    ])
+    expect(steps.map((s) => s.state)).toEqual([
+      'done', 'done', 'current', 'upcoming', 'upcoming', 'upcoming', 'upcoming',
+    ])
+    expect(steps[0].date).toBe('2026-08-01')
+    expect(steps[1].date).toBeNull() // reached, but no recorded date: shown without a guess
+    expect(steps[2].date).toBe('2026-10-20')
+    expect(steps[3].date).toBeNull()
+  })
+
+  it('copes with a batch that has no history', async () => {
+    const { buildTimeline } = await import('./batches')
+    expect(buildTimeline({ stage: 'planted' }, null)[0]).toMatchObject({ state: 'current', date: null })
+  })
+})

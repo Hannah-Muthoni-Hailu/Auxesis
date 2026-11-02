@@ -25,12 +25,12 @@ describe('Faq page', () => {
     await user.click(question)
 
     expect(details.open).toBe(true)
-    expect(screen.getByText(/agreed in writing/i)).toBeVisible()
+    expect(screen.getByText(/paid promptly, at the agreed grade and price/i)).toBeVisible()
   })
 
   it('links answers to the pages they mention', () => {
     renderWithProviders(<Faq />)
-    expect(screen.getAllByRole('link', { name: /Farm Tracker/ })[0]).toHaveAttribute('href', '/traceability')
-    expect(screen.getByRole('link', { name: 'Partner with us' })).toHaveAttribute('href', '/contact')
+    expect(screen.getAllByRole('link', { name: /Farm Tracker/ })[0]).toHaveAttribute('href', '/tracker')
+    expect(screen.getByRole('link', { name: 'Partner with us' })).toHaveAttribute('href', '/work-with-us#farmers')
   })
 })
